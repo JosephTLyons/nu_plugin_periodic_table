@@ -407,6 +407,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "nu_plugin_periodic_table"
+version = "0.59.0"
+dependencies = [
+ "indexmap",
+ "nu-engine",
+ "nu-plugin",
+ "nu-protocol",
+ "periodic-table-on-an-enum",
+]
+
+[[package]]
 name = "num-format"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -448,17 +459,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ce462378b3f87d2ce8e615ad6596767655b10c7bb9e071a586ddd3f8c5c9351"
 dependencies = [
  "json",
-]
-
-[[package]]
-name = "periodic_table"
-version = "0.59.0"
-dependencies = [
- "indexmap",
- "nu-engine",
- "nu-plugin",
- "nu-protocol",
- "periodic-table-on-an-enum",
 ]
 
 [[package]]

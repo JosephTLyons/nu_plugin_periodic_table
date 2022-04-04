@@ -3,7 +3,7 @@ authors = ["The Nu Project Contributors"]
 description = "A periodic table of elements plugin for Nushell"
 edition = "2021"
 license = "MIT"
-name = "periodic_table"
+name = "nu_plugin_periodic_table"
 version = "0.59.0"
 
 [dependencies]
