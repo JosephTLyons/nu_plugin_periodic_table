@@ -36,7 +36,7 @@ impl Plugin for PeriodicTable {
 }
 
 fn build_periodic_table(tag: nu_protocol::Span) -> Result<Value, LabeledError> {
-    let mut calendar_vec_deque = VecDeque::new();
+    let mut vec_deque = VecDeque::new();
     for row in PeriodicTable::get_periodic_table_grid().iter() {
         let mut indexmap = IndexMap::new();
 
@@ -59,14 +59,14 @@ fn build_periodic_table(tag: nu_protocol::Span) -> Result<Value, LabeledError> {
                 vals.push(x.to_owned())
             }
         }
-        calendar_vec_deque.push_back(Value::Record {
+        vec_deque.push_back(Value::Record {
             cols,
             vals,
             span: tag,
         })
     }
     Ok(Value::List {
-        vals: calendar_vec_deque.into_iter().collect(),
+        vals: vec_deque.into_iter().collect(),
         span: tag,
     })
 }
