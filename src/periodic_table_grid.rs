@@ -1,7 +1,7 @@
 use periodic_table_on_an_enum::Element;
 
 #[allow(dead_code)]
-pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 9] = [
+pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 10] = [
     // Row 1
     [
         Some(Element::Hydrogen),
@@ -111,7 +111,7 @@ pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 9] = [
     [
         Some(Element::Cesium),
         Some(Element::Barium),
-        Some(Element::Lanthanum),
+        None,
         Some(Element::Hafnium),
         Some(Element::Tantalum),
         Some(Element::Tungsten),
@@ -132,7 +132,7 @@ pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 9] = [
     [
         Some(Element::Francium),
         Some(Element::Radium),
-        Some(Element::Actinium),
+        None,
         Some(Element::Rutherfordium),
         Some(Element::Dubnium),
         Some(Element::Seaborgium),
@@ -151,9 +151,14 @@ pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 9] = [
     ],
     // Row 8
     [
+        None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
+        None, None, None,
+    ],
+    // Row 9
+    [
         None,
         None,
-        None,
+        Some(Element::Lanthanum),
         Some(Element::Cerium),
         Some(Element::Praseodymium),
         Some(Element::Neodymium),
@@ -170,11 +175,11 @@ pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 9] = [
         Some(Element::Lutetium),
         None,
     ],
-    // Row 9
+    // Row 10
     [
         None,
         None,
-        None,
+        Some(Element::Actinium),
         Some(Element::Thorium),
         Some(Element::Protactinium),
         Some(Element::Uranium),

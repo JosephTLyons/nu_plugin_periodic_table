@@ -1,14 +1,14 @@
 [package]
-authors = ["The Nu Project Contributors"]
-description = "A periodic table of elements plugin for Nushell"
+authors = ["The Nu Project Contributors"] # ?
+description = "A periodic table of elements plugin for Nushell" # ?
 edition = "2021"
-license = "MIT"
+license = "MIT" # ?
 name = "nu_plugin_periodic_table"
-version = "0.59.0"
+version = "0.1.0"
 
 [dependencies]
 nu-plugin = "0.60.0"
 nu-protocol = { version = "0.60.0", features = ["plugin"]}
-nu-engine = { version = "0.60.0" }
+nu-engine = "0.60.0"
 periodic-table-on-an-enum = "0.3.2"
 indexmap = "1.8.1"
