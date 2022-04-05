@@ -2,15 +2,11 @@
 
 - Make sure all the naming of things make sense
     - Variables and function names
-    - Things that are displayed
-        - Should plugin name be one word?  ptab?
-        - Should the column names be reduced down to one word since they require quotes to work with currently?
 - Ask community for opinions
 - General cleanup
 - Fix up categories listed in `help commands | where is_plugin == true` (are these correct?)
-- Add REAMD.md
-- Run cargot fmt, clippy, etc.
-- Make a changelog
+- Run cargo fmt, clippy, etc.
+- Add to CHANGELOG.md and README.md
 - Publish to crates.io (correct toml metadata - author, etc)
 - Add releases to GitHub
 
