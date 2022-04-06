@@ -11,7 +11,8 @@ impl Plugin for PeriodicTable {
                 "classic",
                 "Display the elements in classical form",
                 Some('c'),
-            )]
+            )
+            .switch("full", "Display the full names of the columns", Some('f'))]
     }
 
     fn run(&mut self, name: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
@@ -21,10 +22,14 @@ impl Plugin for PeriodicTable {
             return Ok(Value::Nothing { span: tag });
         }
 
-        if call.has_flag("classic") {
-            return PeriodicTable::build_classic_table(&tag)
+        let should_display_classic_table = call.has_flag("classic");
+
+        if should_display_classic_table {
+            return PeriodicTable::build_classic_table(&tag);
         }
 
-        PeriodicTable::build_detailed_table(&tag)
+        let should_show_full_column_names = call.has_flag("full");
+
+        PeriodicTable::build_detailed_table(&tag, should_show_full_column_names)
     }
 }

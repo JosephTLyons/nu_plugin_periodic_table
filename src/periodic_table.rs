@@ -50,11 +50,18 @@ impl PeriodicTable {
         })
     }
 
-    pub fn build_detailed_table(tag: &nu_protocol::Span) -> Result<Value, LabeledError> {
+    pub fn build_detailed_table(
+        tag: &nu_protocol::Span,
+        should_show_should_show_full_column_names: bool,
+    ) -> Result<Value, LabeledError> {
         let mut vec_deque = VecDeque::new();
 
         for element in periodic_table() {
-            let row_indexmap = PeriodicTable::get_row_indexmap(&element, tag);
+            let row_indexmap = PeriodicTable::get_row_indexmap(
+                &element,
+                tag,
+                should_show_should_show_full_column_names,
+            );
 
             // Clean this logic up, there is probably a more direct way of doing this
             let cols: Vec<String> = row_indexmap.keys().map(|f| f.to_string()).collect();
@@ -79,10 +86,12 @@ impl PeriodicTable {
         })
     }
 
-    fn get_row_indexmap(element: &Element, tag: &nu_protocol::Span) -> IndexMap<String, Value> {
+    fn get_row_indexmap(
+        element: &Element,
+        tag: &nu_protocol::Span,
+        should_show_full_column_names: bool,
+    ) -> IndexMap<String, Value> {
         let mut row_indexmap = IndexMap::new();
-
-        let full_column_names = false;
 
         row_indexmap.insert(
             "name".to_string(),
@@ -99,7 +108,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "atomic number"
             } else {
                 "a-num"
@@ -111,7 +120,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "atomic mass"
             } else {
                 "a-mass"
@@ -123,7 +132,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "atomic radius"
             } else {
                 "a-rad"
@@ -135,7 +144,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "cpk color"
             } else {
                 "cpk-col"
@@ -147,7 +156,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "electron configuration"
             } else {
                 "elec-config"
@@ -159,7 +168,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "electronegativity"
             } else {
                 "electroneg"
@@ -171,7 +180,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "ionization energy"
             } else {
                 "ioniz-energ"
@@ -183,7 +192,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "electron affinity"
             } else {
                 "elec-affin"
@@ -196,7 +205,7 @@ impl PeriodicTable {
         );
         // TODO: CustomValue?,
         // row_indexmap.insert(
-        //     if full_column_names {
+        //     if should_show_full_column_names {
         //         "oxidization state"
         //     } else {
         //         "oxid-state"
@@ -208,7 +217,7 @@ impl PeriodicTable {
         //     },
         // );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "standard state"
             } else {
                 "stand-state"
@@ -220,7 +229,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "melting point"
             } else {
                 "m-point"
@@ -232,7 +241,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "boiling point"
             } else {
                 "b-point"
@@ -251,7 +260,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "group block"
             } else {
                 "g-block"
@@ -263,7 +272,7 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            if full_column_names {
+            if should_show_full_column_names {
                 "year discovered"
             } else {
                 "year"
