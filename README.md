@@ -1,6 +1,6 @@
 # nu_plugin_periodic_table
 
-A periodic table of elements plugin for (Nushell)[https://www.nushell.sh]
+A periodic table of elements plugin for [Nushell](https://www.nushell.sh)
 
 ```shell
 /Users/josephlyons/Desktop/rust_temp/nu_plugin_periodic_table〉periodic-table | where g-block == "Noble Gas" | sort-by electroneg                                                                                                  04/05/2022 11:54:03 PM
