@@ -5,7 +5,7 @@ edition = "2021"
 license = "GPL-3.0-only"
 name = "nu_plugin_periodic_table"
 repository = "https://github.com/JosephTLyons/nu_plugin_periodic_table"
-version = "0.1.0"
+version = "0.1.1"
 
 [dependencies]
 nu-plugin = "0.60.0"
