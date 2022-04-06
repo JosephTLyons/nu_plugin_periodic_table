@@ -1,5 +1,5 @@
 # CHANGELOG
 
-## <Data Here> - v0.1.0
+## April 6, 2022 - v0.1.0
 
 - Initial release
