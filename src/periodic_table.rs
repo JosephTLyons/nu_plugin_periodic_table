@@ -224,7 +224,8 @@ impl PeriodicTable {
             }
             .to_string(),
             Value::String {
-                val: PeriodicTable::get_state_of_matter_name(&element.get_standard_state()),
+                val: PeriodicTable::get_state_of_matter_name(&element.get_standard_state())
+                    .to_string(),
                 span: *tag,
             },
         );
@@ -267,7 +268,7 @@ impl PeriodicTable {
             }
             .to_string(),
             Value::String {
-                val: PeriodicTable::get_group_block_name(&element.get_group()),
+                val: PeriodicTable::get_group_block_name(&element.get_group()).to_string(),
                 span: *tag,
             },
         );
@@ -287,16 +288,15 @@ impl PeriodicTable {
         row_indexmap
     }
 
-    fn get_state_of_matter_name(state_of_matter: &StateOfMatter) -> String {
+    fn get_state_of_matter_name(state_of_matter: &StateOfMatter) -> &str {
         match state_of_matter {
             StateOfMatter::Solid => "Solid",
             StateOfMatter::Liquid => "Liquid",
             StateOfMatter::Gas => "Gas",
         }
-        .to_string()
     }
 
-    fn get_group_block_name(group_block: &GroupBlock) -> String {
+    fn get_group_block_name(group_block: &GroupBlock) -> &str {
         match group_block {
             GroupBlock::AlkaliMetal => "Alkali Metal",
             GroupBlock::AlkalineEarthMetal => "Alkaline Earth Metal",
@@ -309,6 +309,5 @@ impl PeriodicTable {
             GroupBlock::Halogen => "Halogen",
             GroupBlock::NobleGas => "Noble Gas",
         }
-        .to_string()
     }
 }
