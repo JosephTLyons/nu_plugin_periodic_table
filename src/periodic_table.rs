@@ -101,7 +101,12 @@ impl PeriodicTable {
             },
         );
         row_indexmap.insert(
-            "symbol".to_string(),
+            if should_show_full_column_names {
+                "symbol"
+            } else {
+                "sym"
+            }
+            .to_string(),
             Value::String {
                 val: element.get_symbol().to_string(),
                 span: *tag,
