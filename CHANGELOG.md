@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## April 11, 2022 - v0.2.0
+
+- Shortened names of columns in main table, to reduce the width of the table
+- Added a flag to display the full names of the columns
+- Added coloring to the classic table that is based off of the Group Block
+
 ## April 6, 2022 - v0.1.1
 
 - Fixed examples in README.md
