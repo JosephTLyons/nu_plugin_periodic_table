@@ -5,8 +5,9 @@ use nu_plugin::LabeledError;
 use nu_protocol::Value;
 
 use indexmap::IndexMap;
-use periodic_table_on_an_enum::{periodic_table, Element, GroupBlock, StateOfMatter};
+use periodic_table_on_an_enum::{periodic_table, Element};
 
+use crate::extensions::{GroupBlockExt, StateOfMatterExt};
 use crate::periodic_table_grid::PERIODIC_TABLE_GRID;
 
 pub struct PeriodicTable;
@@ -22,8 +23,7 @@ impl PeriodicTable {
                     Some(element) => Value::String {
                         val: {
                             let symbol = element.get_symbol();
-                            let [r, g, b] =
-                                PeriodicTable::get_group_block_color(&element.get_group());
+                            let [r, g, b] = element.get_group().get_color();
                             Color::Rgb(r, g, b).paint(symbol).to_string()
                         },
                         span: *tag,
@@ -235,8 +235,7 @@ impl PeriodicTable {
             }
             .to_string(),
             Value::String {
-                val: PeriodicTable::get_state_of_matter_name(&element.get_standard_state())
-                    .to_string(),
+                val: element.get_standard_state().get_name().to_string(),
                 span: *tag,
             },
         );
@@ -279,7 +278,7 @@ impl PeriodicTable {
             }
             .to_string(),
             Value::String {
-                val: PeriodicTable::get_group_block_name(&element.get_group()).to_string(),
+                val: element.get_group().get_name().to_string(),
                 span: *tag,
             },
         );
@@ -297,43 +296,5 @@ impl PeriodicTable {
         );
 
         row_indexmap
-    }
-
-    fn get_state_of_matter_name(state_of_matter: &StateOfMatter) -> &str {
-        match state_of_matter {
-            StateOfMatter::Solid => "Solid",
-            StateOfMatter::Liquid => "Liquid",
-            StateOfMatter::Gas => "Gas",
-        }
-    }
-
-    fn get_group_block_name(group_block: &GroupBlock) -> &str {
-        match group_block {
-            GroupBlock::AlkaliMetal => "Alkali Metal",
-            GroupBlock::AlkalineEarthMetal => "Alkaline Earth Metal",
-            GroupBlock::Lanthanide => "Lanthanide",
-            GroupBlock::Actinide => "Actinide",
-            GroupBlock::TransitionMetal => "Transition Metal",
-            GroupBlock::PostTransitionMetal => "Post Transition Metal",
-            GroupBlock::Metalloid => "Metalloid",
-            GroupBlock::NonMetal => "Non Metal",
-            GroupBlock::Halogen => "Halogen",
-            GroupBlock::NobleGas => "Noble Gas",
-        }
-    }
-
-    fn get_group_block_color(group_block: &GroupBlock) -> [u8; 3] {
-        match group_block {
-            GroupBlock::AlkaliMetal => [76, 152, 100],
-            GroupBlock::AlkalineEarthMetal => [51, 104, 170],
-            GroupBlock::Lanthanide => [214, 77, 148],
-            GroupBlock::Actinide => [219, 196, 204],
-            GroupBlock::TransitionMetal => [75, 53, 140],
-            GroupBlock::PostTransitionMetal => [245, 201, 84],
-            GroupBlock::Metalloid => [99, 187, 202],
-            GroupBlock::NonMetal => [189, 218, 157],
-            GroupBlock::Halogen => [248, 221, 189],
-            GroupBlock::NobleGas => [208, 56, 83],
-        }
     }
 }

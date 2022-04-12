@@ -1,3 +1,4 @@
+mod extensions;
 mod periodic_table_grid;
 
 use nu_plugin::{serve_plugin, JsonSerializer};
