@@ -8,6 +8,7 @@ repository = "https://github.com/JosephTLyons/nu_plugin_periodic_table"
 version = "0.1.1"
 
 [dependencies]
+nu-ansi-term = "0.45.1"
 nu-plugin = "0.60.0"
 nu-protocol = { version = "0.60.0", features = ["plugin"]}
 nu-engine = "0.60.0"

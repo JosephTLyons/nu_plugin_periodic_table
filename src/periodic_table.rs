@@ -1,5 +1,6 @@
 use std::collections::VecDeque;
 
+use nu_ansi_term::Color;
 use nu_plugin::LabeledError;
 use nu_protocol::Value;
 
@@ -19,7 +20,11 @@ impl PeriodicTable {
             for (i, element_option) in row.iter().enumerate() {
                 let value = match element_option {
                     Some(element) => Value::String {
-                        val: element.get_symbol().to_string(),
+                        val: {
+                            let symbol = element.get_symbol();
+                            let [r, g, b] = PeriodicTable::get_group_block_color(&element.get_group());
+                            Color::Rgb(r, g, b).paint(symbol).to_string()
+                        },
                         span: *tag,
                     },
                     None => Value::Nothing { span: *tag },
@@ -313,6 +318,21 @@ impl PeriodicTable {
             GroupBlock::NonMetal => "Non Metal",
             GroupBlock::Halogen => "Halogen",
             GroupBlock::NobleGas => "Noble Gas",
+        }
+    }
+
+    fn get_group_block_color(group_block: &GroupBlock) -> [u8; 3] {
+        match group_block {
+            GroupBlock::AlkaliMetal => [76, 152, 100],
+            GroupBlock::AlkalineEarthMetal => [51, 104, 170],
+            GroupBlock::Lanthanide => [214, 77, 148],
+            GroupBlock::Actinide => [219, 196, 204],
+            GroupBlock::TransitionMetal => [75, 53, 140],
+            GroupBlock::PostTransitionMetal => [245, 201, 84],
+            GroupBlock::Metalloid => [99, 187, 202],
+            GroupBlock::NonMetal => [189, 218, 157],
+            GroupBlock::Halogen => [248, 221, 189],
+            GroupBlock::NobleGas => [208, 56, 83],
         }
     }
 }
