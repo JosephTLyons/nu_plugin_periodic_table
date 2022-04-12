@@ -22,7 +22,8 @@ impl PeriodicTable {
                     Some(element) => Value::String {
                         val: {
                             let symbol = element.get_symbol();
-                            let [r, g, b] = PeriodicTable::get_group_block_color(&element.get_group());
+                            let [r, g, b] =
+                                PeriodicTable::get_group_block_color(&element.get_group());
                             Color::Rgb(r, g, b).paint(symbol).to_string()
                         },
                         span: *tag,
