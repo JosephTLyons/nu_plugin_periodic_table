@@ -6,7 +6,6 @@ use crate::PeriodicTable;
 impl Plugin for PeriodicTable {
     fn signature(&self) -> Vec<Signature> {
         vec![Signature::build("periodic-table")
-            .desc("List the elements of the periodic table")
             .switch(
                 "classic",
                 "Display the elements in classical form",

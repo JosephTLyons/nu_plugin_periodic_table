@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## April 28, 2022 - v0.2.1
+
+- Update Nushell crates to fix broken state of plugin
+
 ## April 11, 2022 - v0.2.0
 
 - Shortened names of columns in main table, to reduce the width of the table
