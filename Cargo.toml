@@ -5,12 +5,12 @@ edition = "2021"
 license = "GPL-3.0-only"
 name = "nu_plugin_periodic_table"
 repository = "https://github.com/JosephTLyons/nu_plugin_periodic_table"
-version = "0.2.2"
+version = "0.2.3"
 
 [dependencies]
-nu-ansi-term = "0.45.1"
-nu-plugin = "0.61.0"
-nu-protocol = { version = "0.61.0", features = ["plugin"]}
-nu-engine = "0.61.0"
-indexmap = "1.8.1"
+nu-ansi-term = "0.46.0"
+nu-plugin = "0.65.0"
+nu-protocol = { version = "0.65.0", features = ["plugin"]}
+nu-engine = "0.65.0"
+indexmap = "1.9.1"
 periodic-table-on-an-enum = "0.3.2"

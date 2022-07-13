@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## July 13, 2022 - v0.2.2
+
+- Update Nushell crates to fix broken state of plugin
+
 ## April 28, 2022 - v0.2.2
 
 - Add description back to plugin
