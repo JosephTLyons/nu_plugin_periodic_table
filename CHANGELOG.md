@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## July 13, 2022 - v0.2.2
+## December 12, 2022 - v0.2.4
+
+- Update Nushell crates to fix broken state of plugin
+
+## July 13, 2022 - v0.2.3
 
 - Update Nushell crates to fix broken state of plugin
 
