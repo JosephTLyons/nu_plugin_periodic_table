@@ -9,8 +9,8 @@ version = "0.2.4"
 
 [dependencies]
 nu-ansi-term = "0.46.0"
-nu-plugin = "0.72.0"
-nu-protocol = { version = "0.72.0", features = ["plugin"]}
-nu-engine = "0.72.0"
+nu-plugin = "0.76.0"
+nu-protocol = { version = "0.76.0", features = ["plugin"]}
+nu-engine = "0.76.0"
 indexmap = "1.9.2"
 periodic-table-on-an-enum = "0.3.2"
