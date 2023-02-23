@@ -1,18 +1,19 @@
 use nu_plugin::{EvaluatedCall, LabeledError, Plugin};
-use nu_protocol::{Signature, Value};
+use nu_protocol::{Category, PluginSignature, Value};
 
 use crate::PeriodicTable;
 
 impl Plugin for PeriodicTable {
-    fn signature(&self) -> Vec<Signature> {
-        vec![Signature::build("periodic-table")
+    fn signature(&self) -> Vec<PluginSignature> {
+        vec![PluginSignature::build("periodic-table")
             .usage("List the elements of the periodic table")
             .switch(
                 "classic",
                 "Display the elements in classical form",
                 Some('c'),
             )
-            .switch("full", "Display the full names of the columns", Some('f'))]
+            .switch("full", "Display the full names of the columns", Some('f'))
+            .category(Category::Experimental)]
     }
 
     fn run(&mut self, name: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
