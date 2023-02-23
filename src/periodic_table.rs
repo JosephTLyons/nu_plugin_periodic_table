@@ -23,7 +23,7 @@ impl PeriodicTable {
                     Some(element) => Value::String {
                         val: {
                             let symbol = element.get_symbol();
-                            let [r, g, b] = element.get_group().get_color();
+                            let [r, g, b] = element.get_group().color();
                             Color::Rgb(r, g, b).paint(symbol).to_string()
                         },
                         span: *tag,
@@ -235,7 +235,7 @@ impl PeriodicTable {
             }
             .to_string(),
             Value::String {
-                val: element.get_standard_state().get_name().to_string(),
+                val: element.get_standard_state().name().to_string(),
                 span: *tag,
             },
         );
@@ -278,7 +278,7 @@ impl PeriodicTable {
             }
             .to_string(),
             Value::String {
-                val: element.get_group().get_name().to_string(),
+                val: element.get_group().name().to_string(),
                 span: *tag,
             },
         );
