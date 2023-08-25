@@ -1,20 +1,16 @@
-use std::collections::VecDeque;
-
-use nu_ansi_term::Color;
-use nu_plugin::LabeledError;
-use nu_protocol::Value;
-
-use indexmap::IndexMap;
-use periodic_table_on_an_enum::{periodic_table, Element};
-
 use crate::extensions::{GroupBlockExt, StateOfMatterExt};
 use crate::periodic_table_grid::PERIODIC_TABLE_GRID;
+use indexmap::IndexMap;
+use nu_ansi_term::Color;
+use nu_plugin::LabeledError;
+use nu_protocol::{Record, Value};
+use periodic_table_on_an_enum::{periodic_table, Element};
 
 pub struct PeriodicTable;
 
 impl PeriodicTable {
     pub fn build_classic_table(tag: &nu_protocol::Span) -> Result<Value, LabeledError> {
-        let mut vec_deque = VecDeque::new();
+        let mut vec = Vec::new();
         for row in PERIODIC_TABLE_GRID.iter() {
             let mut row_indexmap = IndexMap::new();
 
@@ -36,22 +32,18 @@ impl PeriodicTable {
 
             // Clean this logic up, there is probably a more direct way of doing this
             let cols: Vec<String> = row_indexmap.keys().map(|f| f.to_string()).collect();
-            let mut vals: Vec<Value> = Vec::new();
 
+            let mut recs = Record::new();
             for c in &cols {
                 if let Some(x) = row_indexmap.get(c) {
-                    vals.push(x.to_owned())
+                    recs.push(c.to_owned(), x.to_owned())
                 }
             }
-
-            vec_deque.push_back(Value::Record {
-                cols,
-                vals,
-                span: *tag,
-            })
+            vec.push(Value::record(recs, *tag));
         }
+
         Ok(Value::List {
-            vals: vec_deque.into_iter().collect(),
+            vals: vec,
             span: *tag,
         })
     }
@@ -60,7 +52,7 @@ impl PeriodicTable {
         tag: &nu_protocol::Span,
         should_show_should_show_full_column_names: bool,
     ) -> Result<Value, LabeledError> {
-        let mut vec_deque = VecDeque::new();
+        let mut vec = Vec::new();
 
         for element in periodic_table() {
             let row_indexmap = PeriodicTable::get_row_indexmap(
@@ -71,23 +63,17 @@ impl PeriodicTable {
 
             // Clean this logic up, there is probably a more direct way of doing this
             let cols: Vec<String> = row_indexmap.keys().map(|f| f.to_string()).collect();
-            let mut vals: Vec<Value> = Vec::new();
-
+            let mut recs = Record::new();
             for c in &cols {
                 if let Some(x) = row_indexmap.get(c) {
-                    vals.push(x.to_owned())
+                    recs.push(c.to_owned(), x.to_owned())
                 }
             }
-
-            vec_deque.push_back(Value::Record {
-                cols,
-                vals,
-                span: *tag,
-            })
+            vec.push(Value::record(recs, *tag));
         }
 
         Ok(Value::List {
-            vals: vec_deque.into_iter().collect(),
+            vals: vec,
             span: *tag,
         })
     }

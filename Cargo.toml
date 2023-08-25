@@ -8,9 +8,8 @@ repository = "https://github.com/JosephTLyons/nu_plugin_periodic_table"
 version = "0.2.5"
 
 [dependencies]
-nu-ansi-term = "0.46.0"
-nu-plugin = "0.76.0"
-nu-protocol = { version = "0.76.0", features = ["plugin"]}
-nu-engine = "0.76.0"
-indexmap = "1.9.2"
+nu-ansi-term = "0.49.0"
+nu-plugin = { version = "0.84.1", path = "../nushell/crates/nu-plugin" }
+nu-protocol = { version = "0.84.1", features = ["plugin"], path = "../nushell/crates/nu-protocol" }
+indexmap = "2.0.0"
 periodic-table-on-an-enum = "0.3.2"
