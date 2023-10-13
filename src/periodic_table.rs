@@ -1,34 +1,30 @@
-use std::collections::VecDeque;
-
-use nu_ansi_term::Color;
-use nu_plugin::LabeledError;
-use nu_protocol::Value;
-
-use indexmap::IndexMap;
-use periodic_table_on_an_enum::{periodic_table, Element};
-
 use crate::extensions::{GroupBlockExt, StateOfMatterExt};
 use crate::periodic_table_grid::PERIODIC_TABLE_GRID;
+use indexmap::IndexMap;
+use nu_ansi_term::Color;
+use nu_plugin::LabeledError;
+use nu_protocol::{Record, Value};
+use periodic_table_on_an_enum::{periodic_table, Element};
 
 pub struct PeriodicTable;
 
 impl PeriodicTable {
     pub fn build_classic_table(tag: &nu_protocol::Span) -> Result<Value, LabeledError> {
-        let mut vec_deque = VecDeque::new();
+        let mut vec = Vec::new();
         for row in PERIODIC_TABLE_GRID.iter() {
             let mut row_indexmap = IndexMap::new();
 
             for (i, element_option) in row.iter().enumerate() {
                 let value = match element_option {
-                    Some(element) => Value::String {
-                        val: {
+                    Some(element) => Value::string(
+                        {
                             let symbol = element.get_symbol();
                             let [r, g, b] = element.get_group().color();
                             Color::Rgb(r, g, b).paint(symbol).to_string()
                         },
-                        span: *tag,
-                    },
-                    None => Value::Nothing { span: *tag },
+                        *tag,
+                    ),
+                    None => Value::nothing(*tag),
                 };
 
                 row_indexmap.insert(i.to_string(), value);
@@ -36,31 +32,24 @@ impl PeriodicTable {
 
             // Clean this logic up, there is probably a more direct way of doing this
             let cols: Vec<String> = row_indexmap.keys().map(|f| f.to_string()).collect();
-            let mut vals: Vec<Value> = Vec::new();
 
+            let mut recs = Record::new();
             for c in &cols {
                 if let Some(x) = row_indexmap.get(c) {
-                    vals.push(x.to_owned())
+                    recs.push(c.to_owned(), x.to_owned())
                 }
             }
-
-            vec_deque.push_back(Value::Record {
-                cols,
-                vals,
-                span: *tag,
-            })
+            vec.push(Value::record(recs, *tag));
         }
-        Ok(Value::List {
-            vals: vec_deque.into_iter().collect(),
-            span: *tag,
-        })
+
+        Ok(Value::list(vec, *tag))
     }
 
     pub fn build_detailed_table(
         tag: &nu_protocol::Span,
         should_show_should_show_full_column_names: bool,
     ) -> Result<Value, LabeledError> {
-        let mut vec_deque = VecDeque::new();
+        let mut vec = Vec::new();
 
         for element in periodic_table() {
             let row_indexmap = PeriodicTable::get_row_indexmap(
@@ -71,25 +60,16 @@ impl PeriodicTable {
 
             // Clean this logic up, there is probably a more direct way of doing this
             let cols: Vec<String> = row_indexmap.keys().map(|f| f.to_string()).collect();
-            let mut vals: Vec<Value> = Vec::new();
-
+            let mut recs = Record::new();
             for c in &cols {
                 if let Some(x) = row_indexmap.get(c) {
-                    vals.push(x.to_owned())
+                    recs.push(c.to_owned(), x.to_owned())
                 }
             }
-
-            vec_deque.push_back(Value::Record {
-                cols,
-                vals,
-                span: *tag,
-            })
+            vec.push(Value::record(recs, *tag));
         }
 
-        Ok(Value::List {
-            vals: vec_deque.into_iter().collect(),
-            span: *tag,
-        })
+        Ok(Value::list(vec, *tag))
     }
 
     fn get_row_indexmap(
@@ -101,10 +81,7 @@ impl PeriodicTable {
 
         row_indexmap.insert(
             "name".to_string(),
-            Value::String {
-                val: element.get_name().to_string(),
-                span: *tag,
-            },
+            Value::string(element.get_name().to_string(), *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -113,10 +90,7 @@ impl PeriodicTable {
                 "sym"
             }
             .to_string(),
-            Value::String {
-                val: element.get_symbol().to_string(),
-                span: *tag,
-            },
+            Value::string(element.get_symbol().to_string(), *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -125,10 +99,7 @@ impl PeriodicTable {
                 "a-num"
             }
             .to_string(),
-            Value::Int {
-                val: element.get_atomic_number() as i64,
-                span: *tag,
-            },
+            Value::int(element.get_atomic_number() as i64, *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -137,10 +108,7 @@ impl PeriodicTable {
                 "a-mass"
             }
             .to_string(),
-            Value::Float {
-                val: element.get_atomic_mass() as f64,
-                span: *tag,
-            },
+            Value::float(element.get_atomic_mass() as f64, *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -149,10 +117,7 @@ impl PeriodicTable {
                 "a-rad"
             }
             .to_string(),
-            Value::Int {
-                val: element.get_atomic_radius() as i64,
-                span: *tag,
-            },
+            Value::int(element.get_atomic_radius() as i64, *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -161,10 +126,7 @@ impl PeriodicTable {
                 "cpk-col"
             }
             .to_string(),
-            Value::Binary {
-                val: element.get_cpk().to_vec(),
-                span: *tag,
-            },
+            Value::binary(element.get_cpk().to_vec(), *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -173,10 +135,7 @@ impl PeriodicTable {
                 "elec-config"
             }
             .to_string(),
-            Value::String {
-                val: element.get_electronic_configuration_str().to_string(),
-                span: *tag,
-            },
+            Value::string(element.get_electronic_configuration_str().to_string(), *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -185,10 +144,7 @@ impl PeriodicTable {
                 "electroneg"
             }
             .to_string(),
-            Value::Float {
-                val: element.get_electronegativity() as f64,
-                span: *tag,
-            },
+            Value::float(element.get_electronegativity() as f64, *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -197,10 +153,7 @@ impl PeriodicTable {
                 "ioniz-energ"
             }
             .to_string(),
-            Value::Float {
-                val: element.get_ionization_energy() as f64,
-                span: *tag,
-            },
+            Value::float(element.get_ionization_energy() as f64, *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -209,10 +162,7 @@ impl PeriodicTable {
                 "elec-affin"
             }
             .to_string(),
-            Value::Float {
-                val: element.get_electron_affinity() as f64,
-                span: *tag,
-            },
+            Value::float(element.get_electron_affinity() as f64, *tag),
         );
         // TODO: CustomValue?,
         // row_indexmap.insert(
@@ -222,10 +172,7 @@ impl PeriodicTable {
         //         "oxid-state"
         //     }
         //     .to_string(),
-        //     Value::String {
-        //         val: element.get_oxidation_states(),
-        //         span: *tag,
-        //     },
+        //     Value::string(element.get_oxidation_states(), *tag),
         // );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -234,10 +181,7 @@ impl PeriodicTable {
                 "stand-state"
             }
             .to_string(),
-            Value::String {
-                val: element.get_standard_state().name().to_string(),
-                span: *tag,
-            },
+            Value::string(element.get_standard_state().name().to_string(), *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -246,10 +190,7 @@ impl PeriodicTable {
                 "m-point"
             }
             .to_string(),
-            Value::Float {
-                val: element.get_melting_point() as f64,
-                span: *tag,
-            },
+            Value::float(element.get_melting_point() as f64, *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -258,17 +199,11 @@ impl PeriodicTable {
                 "b-point"
             }
             .to_string(),
-            Value::Float {
-                val: element.get_boiling_point() as f64,
-                span: *tag,
-            },
+            Value::float(element.get_boiling_point() as f64, *tag),
         );
         row_indexmap.insert(
             "density".to_string(),
-            Value::Float {
-                val: element.get_density() as f64,
-                span: *tag,
-            },
+            Value::float(element.get_density() as f64, *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -277,10 +212,7 @@ impl PeriodicTable {
                 "g-block"
             }
             .to_string(),
-            Value::String {
-                val: element.get_group().name().to_string(),
-                span: *tag,
-            },
+            Value::string(element.get_group().name().to_string(), *tag),
         );
         row_indexmap.insert(
             if should_show_full_column_names {
@@ -289,10 +221,7 @@ impl PeriodicTable {
                 "year"
             }
             .to_string(),
-            Value::Int {
-                val: element.get_year_discovered() as i64,
-                span: *tag,
-            },
+            Value::int(element.get_year_discovered() as i64, *tag),
         );
 
         row_indexmap

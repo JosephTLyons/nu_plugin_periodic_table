@@ -20,7 +20,7 @@ impl Plugin for PeriodicTable {
         let tag = call.head;
 
         if name != "periodic-table" {
-            return Ok(Value::Nothing { span: tag });
+            return Ok(Value::nothing(tag));
         }
 
         let should_display_classic_table = call.has_flag("classic");
