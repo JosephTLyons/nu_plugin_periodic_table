@@ -22,9 +22,11 @@ impl PeriodicTable {
                             let [r, g, b] = element.get_group().color();
                             Color::Rgb(r, g, b).paint(symbol).to_string()
                         },
-                        span: *tag,
+                        internal_span: *tag,
                     },
-                    None => Value::Nothing { span: *tag },
+                    None => Value::Nothing {
+                        internal_span: *tag,
+                    },
                 };
 
                 row_indexmap.insert(i.to_string(), value);
@@ -44,7 +46,7 @@ impl PeriodicTable {
 
         Ok(Value::List {
             vals: vec,
-            span: *tag,
+            internal_span: *tag,
         })
     }
 
@@ -74,7 +76,7 @@ impl PeriodicTable {
 
         Ok(Value::List {
             vals: vec,
-            span: *tag,
+            internal_span: *tag,
         })
     }
 
@@ -89,7 +91,7 @@ impl PeriodicTable {
             "name".to_string(),
             Value::String {
                 val: element.get_name().to_string(),
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -101,7 +103,7 @@ impl PeriodicTable {
             .to_string(),
             Value::String {
                 val: element.get_symbol().to_string(),
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -113,7 +115,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Int {
                 val: element.get_atomic_number() as i64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -125,7 +127,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Float {
                 val: element.get_atomic_mass() as f64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -137,7 +139,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Int {
                 val: element.get_atomic_radius() as i64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -149,7 +151,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Binary {
                 val: element.get_cpk().to_vec(),
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -161,7 +163,7 @@ impl PeriodicTable {
             .to_string(),
             Value::String {
                 val: element.get_electronic_configuration_str().to_string(),
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -173,7 +175,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Float {
                 val: element.get_electronegativity() as f64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -185,7 +187,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Float {
                 val: element.get_ionization_energy() as f64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -197,7 +199,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Float {
                 val: element.get_electron_affinity() as f64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         // TODO: CustomValue?,
@@ -210,7 +212,7 @@ impl PeriodicTable {
         //     .to_string(),
         //     Value::String {
         //         val: element.get_oxidation_states(),
-        //         span: *tag,
+        //         internal_span: *tag,
         //     },
         // );
         row_indexmap.insert(
@@ -222,7 +224,7 @@ impl PeriodicTable {
             .to_string(),
             Value::String {
                 val: element.get_standard_state().name().to_string(),
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -234,7 +236,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Float {
                 val: element.get_melting_point() as f64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -246,14 +248,14 @@ impl PeriodicTable {
             .to_string(),
             Value::Float {
                 val: element.get_boiling_point() as f64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
             "density".to_string(),
             Value::Float {
                 val: element.get_density() as f64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -265,7 +267,7 @@ impl PeriodicTable {
             .to_string(),
             Value::String {
                 val: element.get_group().name().to_string(),
-                span: *tag,
+                internal_span: *tag,
             },
         );
         row_indexmap.insert(
@@ -277,7 +279,7 @@ impl PeriodicTable {
             .to_string(),
             Value::Int {
                 val: element.get_year_discovered() as i64,
-                span: *tag,
+                internal_span: *tag,
             },
         );
 
