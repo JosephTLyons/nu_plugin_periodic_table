@@ -9,29 +9,31 @@ pub struct PeriodicTable;
 
 impl PeriodicTable {
     pub fn build_classic_table(tag: &nu_protocol::Span) -> Result<Value, LabeledError> {
-        let mut vec = Vec::new();
+        let vec: Vec<Value> = PERIODIC_TABLE_GRID
+            .into_iter()
+            .map(|element_row| {
+                let mut record = Record::new();
 
-        for element_row in PERIODIC_TABLE_GRID {
-            let mut record = Record::new();
+                for (i, element_option) in element_row.iter().enumerate() {
+                    let value = match element_option {
+                        Some(element) => Value::string(
+                            {
+                                let symbol = element.get_symbol();
+                                let [r, g, b] = element.get_group().color();
+                                Color::Rgb(r, g, b).paint(symbol).to_string()
+                            },
+                            *tag,
+                        ),
+                        None => Value::nothing(*tag),
+                    };
 
-            for (i, element_option) in element_row.iter().enumerate() {
-                let value = match element_option {
-                    Some(element) => Value::string(
-                        {
-                            let symbol = element.get_symbol();
-                            let [r, g, b] = element.get_group().color();
-                            Color::Rgb(r, g, b).paint(symbol).to_string()
-                        },
-                        *tag,
-                    ),
-                    None => Value::nothing(*tag),
-                };
+                    // Get rid of push
+                    record.push(i.to_string(), value);
+                }
 
-                record.push(i.to_string(), value);
-            }
-
-            vec.push(Value::record(record, *tag));
-        }
+                Value::record(record, *tag)
+            })
+            .collect();
 
         Ok(Value::list(vec, *tag))
     }
@@ -40,18 +42,20 @@ impl PeriodicTable {
         tag: &nu_protocol::Span,
         should_show_full_column_names: bool,
     ) -> Result<Value, LabeledError> {
-        let mut vec = Vec::new();
+        let vec: Vec<Value> = periodic_table()
+            .into_iter()
+            .map(|element| {
+                let row = PeriodicTable::get_row(&element, tag, should_show_full_column_names);
+                let mut record = Record::new();
 
-        for element in periodic_table() {
-            let row = PeriodicTable::get_row(&element, tag, should_show_full_column_names);
-            let mut record = Record::new();
+                for item in row {
+                    // Get rid of push
+                    record.push(item.0, item.1)
+                }
 
-            for item in row {
-                record.push(item.0, item.1)
-            }
-
-            vec.push(Value::record(record, *tag));
-        }
+                Value::record(record, *tag)
+            })
+            .collect();
 
         Ok(Value::list(vec, *tag))
     }
