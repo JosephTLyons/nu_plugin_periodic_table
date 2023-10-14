@@ -915,7 +915,7 @@ dependencies = [
 
 [[package]]
 name = "nu_plugin_periodic_table"
-version = "0.2.5"
+version = "0.2.6"
 dependencies = [
  "indexmap",
  "nu-ansi-term",

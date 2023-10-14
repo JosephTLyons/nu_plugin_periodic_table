@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## October 13, 2023 - v0.2.6
+
+- Bump Nushell dependencies
+
 ## February 22, 2023 - v0.2.5
 
 - Update Nushell crates to fix broken state of plugin
