@@ -12,24 +12,25 @@ impl PeriodicTable {
         let vec: Vec<Value> = PERIODIC_TABLE_GRID
             .into_iter()
             .map(|element_row| {
-                let mut record = Record::new();
+                let record: Record = element_row
+                    .iter()
+                    .enumerate()
+                    .map(|(i, element_option)| {
+                        let value = match element_option {
+                            Some(element) => Value::string(
+                                {
+                                    let symbol = element.get_symbol();
+                                    let [r, g, b] = element.get_group().color();
+                                    Color::Rgb(r, g, b).paint(symbol).to_string()
+                                },
+                                *tag,
+                            ),
+                            None => Value::nothing(*tag),
+                        };
 
-                for (i, element_option) in element_row.iter().enumerate() {
-                    let value = match element_option {
-                        Some(element) => Value::string(
-                            {
-                                let symbol = element.get_symbol();
-                                let [r, g, b] = element.get_group().color();
-                                Color::Rgb(r, g, b).paint(symbol).to_string()
-                            },
-                            *tag,
-                        ),
-                        None => Value::nothing(*tag),
-                    };
-
-                    // Get rid of push
-                    record.push(i.to_string(), value);
-                }
+                        (i.to_string(), value)
+                    })
+                    .collect();
 
                 Value::record(record, *tag)
             })
