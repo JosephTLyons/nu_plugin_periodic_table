@@ -1,28 +1,32 @@
 # CHANGELOG
 
+## October 14, 2023 - v0.2.7
+
+- Fixed the group numbers of the classic table
+
 ## October 13, 2023 - v0.2.6
 
-- Bump Nushell dependencies
+- Bumped Nushell dependencies
 
 ## February 22, 2023 - v0.2.5
 
-- Update Nushell crates to fix broken state of plugin
+- Updateed Nushell crates to fix broken state of plugin
 
 ## December 12, 2022 - v0.2.4
 
-- Update Nushell crates to fix broken state of plugin
+- Updateed Nushell crates to fix broken state of plugin
 
 ## July 13, 2022 - v0.2.3
 
-- Update Nushell crates to fix broken state of plugin
+- Updated Nushell crates to fix broken state of plugin
 
 ## April 28, 2022 - v0.2.2
 
-- Add description back to plugin
+- Added description back to plugin
 
 ## April 28, 2022 - v0.2.1
 
-- Update Nushell crates to fix broken state of plugin
+- Updated Nushell crates to fix broken state of plugin
 
 ## April 11, 2022 - v0.2.0
 
