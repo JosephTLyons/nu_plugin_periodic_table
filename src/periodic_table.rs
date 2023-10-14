@@ -46,13 +46,10 @@ impl PeriodicTable {
             .into_iter()
             .map(|element| {
                 let row = PeriodicTable::get_row(&element, tag, should_show_full_column_names);
-                let mut record = Record::new();
-
-                for item in row {
-                    // Get rid of push
-                    record.push(item.0, item.1)
-                }
-
+                let record = row
+                    .into_iter()
+                    .map(|(name, value)| (name.to_owned(), value))
+                    .collect::<Record>();
                 Value::record(record, *tag)
             })
             .collect();
