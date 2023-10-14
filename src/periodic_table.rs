@@ -10,8 +10,9 @@ pub struct PeriodicTable;
 impl PeriodicTable {
     pub fn build_classic_table(tag: &nu_protocol::Span) -> Result<Value, LabeledError> {
         let mut vec = Vec::new();
+
         for element_row in PERIODIC_TABLE_GRID.iter() {
-            let mut row = Vec::new();
+            let mut record = Record::new();
 
             for (i, element_option) in element_row.iter().enumerate() {
                 let value = match element_option {
@@ -26,15 +27,10 @@ impl PeriodicTable {
                     None => Value::nothing(*tag),
                 };
 
-                row.push((i.to_string(), value));
+                record.push(i.to_string(), value);
             }
 
-            let mut recs = Record::new();
-
-            for item in row {
-                recs.push(item.0, item.1)
-            }
-            vec.push(Value::record(recs, *tag));
+            vec.push(Value::record(record, *tag));
         }
 
         Ok(Value::list(vec, *tag))
@@ -48,12 +44,13 @@ impl PeriodicTable {
 
         for element in periodic_table() {
             let row = PeriodicTable::get_row(&element, tag, should_show_full_column_names);
-            let mut recs = Record::new();
+            let mut record = Record::new();
 
             for item in row {
-                recs.push(item.0, item.1)
+                record.push(item.0, item.1)
             }
-            vec.push(Value::record(recs, *tag));
+
+            vec.push(Value::record(record, *tag));
         }
 
         Ok(Value::list(vec, *tag))
