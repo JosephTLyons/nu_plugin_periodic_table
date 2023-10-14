@@ -11,7 +11,7 @@ impl PeriodicTable {
     pub fn build_classic_table(tag: &nu_protocol::Span) -> Result<Value, LabeledError> {
         let mut vec = Vec::new();
 
-        for element_row in PERIODIC_TABLE_GRID.iter() {
+        for element_row in PERIODIC_TABLE_GRID {
             let mut record = Record::new();
 
             for (i, element_option) in element_row.iter().enumerate() {
