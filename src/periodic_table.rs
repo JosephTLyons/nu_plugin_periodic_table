@@ -28,7 +28,8 @@ impl PeriodicTable {
                             None => Value::nothing(*tag),
                         };
 
-                        (i.to_string(), value)
+                        let group_number = i + 1;
+                        (group_number.to_string(), value)
                     })
                     .collect();
 
