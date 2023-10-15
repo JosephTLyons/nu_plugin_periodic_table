@@ -47,7 +47,7 @@ impl PeriodicTable {
         let vec: Vec<Value> = periodic_table()
             .into_iter()
             .map(|element| {
-                let row = PeriodicTable::get_row(&element, tag, should_show_full_column_names);
+                let row = PeriodicTable::row(&element, tag, should_show_full_column_names);
                 let record = row
                     .into_iter()
                     .map(|(name, value)| (name.to_owned(), value))
@@ -59,7 +59,7 @@ impl PeriodicTable {
         Ok(Value::list(vec, *tag))
     }
 
-    fn get_row<'a>(
+    fn row<'a>(
         element: &Element,
         tag: &nu_protocol::Span,
         should_show_full_column_names: bool,
