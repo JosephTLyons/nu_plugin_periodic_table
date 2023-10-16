@@ -13,7 +13,7 @@ impl Plugin for PeriodicTable {
                 Some('c'),
             )
             .switch("full", "Display the full names of the columns", Some('f'))
-            .category(Category::Experimental)]
+            .category(Category::Generators)]
     }
 
     fn run(&mut self, name: &str, call: &EvaluatedCall, _: &Value) -> Result<Value, LabeledError> {
