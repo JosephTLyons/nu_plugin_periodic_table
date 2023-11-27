@@ -3,7 +3,7 @@
 A periodic table of elements plugin for [Nushell](https://www.nushell.sh)
 
 ```shell
-〉periodic-table | where g-block == "Noble Gas" | sort-by electroneg                                                                                                  04/05/2022 11:54:03 PM
+〉periodic-table | where g-block == "Noble Gas" | sort-by electroneg
 ╭───┬───────────┬────────┬───────┬────────┬───────┬─────────────────┬───────────────────────────────────┬────────────┬─────────────┬────────────┬─────────────┬─────────┬─────────┬─────────┬───────────┬──────╮
 │ # │   name    │ symbol │ a-num │ a-mass │ a-rad │     cpk-col     │            elec-config            │ electroneg │ ioniz-energ │ elec-affin │ stand-state │ m-point │ b-point │ density │  g-block  │ year │
 ├───┼───────────┼────────┼───────┼────────┼───────┼─────────────────┼───────────────────────────────────┼────────────┼─────────────┼────────────┼─────────────┼─────────┼─────────┼─────────┼───────────┼──────┤
@@ -18,7 +18,7 @@ A periodic table of elements plugin for [Nushell](https://www.nushell.sh)
 ```
 
 ```shell
-〉periodic-table -c                                                                                                                                                   04/05/2022 11:54:10 PM
+〉periodic-table -c
 ╭───┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────╮
 │ # │ 1  │ 2  │ 3  │ 4  │ 5  │ 6  │ 7  │ 8  │ 9  │ 10 │ 11 │ 12 │ 13 │ 14 │ 15 │ 16 │ 17 │ 18 │
 ├───┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼────┤
