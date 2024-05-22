@@ -1,9 +1,10 @@
 use crate::extensions::{GroupBlockExt, StateOfMatterExt};
 use crate::periodic_table_grid::PERIODIC_TABLE_GRID;
 use nu_ansi_term::Color;
-use nu_plugin::LabeledError;
-use nu_protocol::{Record, Value};
+use nu_protocol::{LabeledError, Record, Value};
 use periodic_table_on_an_enum::{periodic_table, Element};
+
+// TODO: Rework this to not have any nushell dependenices. Return raw data and nushell mod should convert it into nushell values.
 
 pub struct PeriodicTable;
 
