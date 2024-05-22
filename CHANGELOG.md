@@ -10,11 +10,11 @@
 
 ## February 22, 2023 - v0.2.5
 
-- Updateed Nushell crates to fix broken state of plugin
+- Updated Nushell crates to fix broken state of plugin
 
 ## December 12, 2022 - v0.2.4
 
-- Updateed Nushell crates to fix broken state of plugin
+- Updated Nushell crates to fix broken state of plugin
 
 ## July 13, 2022 - v0.2.3
 
