@@ -9,6 +9,6 @@ version = "0.2.8"
 
 [dependencies]
 nu-ansi-term = "0.50.0"
-nu-plugin = { path = "../nushell/crates/nu-plugin", version = "0.93.1" }
-nu-protocol = { path = "../nushell/crates/nu-protocol", version = "0.93.1" }
+nu-plugin = "0.94.0"
+nu-protocol = "0.94.0"
 periodic-table-on-an-enum = "0.3.2"
