@@ -1,5 +1,6 @@
 use periodic_table_on_an_enum::{GroupBlock, StateOfMatter};
 
+#[allow(dead_code)]
 pub trait GroupBlockExt {
     fn name(&self) -> &str;
     fn color(&self) -> [u8; 3];
@@ -37,6 +38,7 @@ impl GroupBlockExt for GroupBlock {
     }
 }
 
+#[allow(dead_code)]
 pub trait StateOfMatterExt {
     fn name(&self) -> &str;
 }
