@@ -7,6 +7,10 @@ impl Plugin for PeriodicTable {
     fn commands(&self) -> Vec<Box<dyn PluginCommand<Plugin = Self>>> {
         vec![Box::new(PeriodicTable)]
     }
+
+    fn version(&self) -> String {
+        env!("CARGO_PKG_VERSION").into()
+    }
 }
 
 impl SimplePluginCommand for PeriodicTable {
