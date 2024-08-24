@@ -2,6 +2,15 @@
 
 A periodic table of elements plugin for [Nushell](https://www.nushell.sh)
 
+## Installation
+
+1. Clone this repository
+2. Build the target via `cargo build --release`
+3. Add the plugin to nushell using the following nushell command `plugin add ./target/release/nu_plugin_periodic_table`
+4. Reload the plugin using `plugin use periodic_table`
+
+## Usage
+
 ```shell
 〉periodic-table | where g-block == "Noble Gas" | sort-by electroneg
 ╭───┬───────────┬────────┬───────┬────────┬───────┬─────────────────┬───────────────────────────────────┬────────────┬─────────────┬────────────┬─────────────┬─────────┬─────────┬─────────┬───────────┬──────╮
