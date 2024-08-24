@@ -8,7 +8,7 @@ repository = "https://github.com/JosephTLyons/nu_plugin_periodic_table"
 version = "0.2.8"
 
 [dependencies]
-nu-ansi-term = "0.50.0"
-nu-plugin = "0.94.0"
-nu-protocol = "0.94.0"
+nu-ansi-term = "0.50.1"
+nu-plugin = "0.97.1"
+nu-protocol = "0.97.1"
 periodic-table-on-an-enum = "0.3.2"
