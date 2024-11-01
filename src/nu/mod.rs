@@ -20,7 +20,7 @@ impl SimplePluginCommand for PeriodicTable {
         "periodic-table"
     }
 
-    fn usage(&self) -> &str {
+    fn description(&self) -> &str {
         "List the elements of the periodic table"
     }
 
