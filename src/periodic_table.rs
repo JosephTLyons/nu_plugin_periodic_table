@@ -4,7 +4,7 @@ use nu_ansi_term::Color;
 use nu_protocol::{LabeledError, Record, Value};
 use periodic_table_on_an_enum::{periodic_table, Element};
 
-// TODO: Rework this to not have any nushell dependenices. Return raw data and nushell mod should convert it into nushell values.
+// TODO: Rework this to not have any nushell dependencies. Return raw data and nushell mod should convert it into nushell values.
 
 pub struct PeriodicTable;
 
