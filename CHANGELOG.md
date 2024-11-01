@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## November 1, 2024 - v0.2.10
+
+- Updated Nushell crates to fix broken state of plugin
+
+## August 24, 2024 - v0.2.9
+
+- Updated Nushell crates to fix broken state of plugin
+
 ## May 22, 2024 - v0.2.8
 
 - Updated Nushell crates to fix broken state of plugin
