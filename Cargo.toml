@@ -9,6 +9,6 @@ version = "0.2.10"
 
 [dependencies]
 nu-ansi-term = "0.50.1"
-nu-plugin = "0.99.1"
-nu-protocol = "0.99.1"
+nu-plugin = "0.101.0"
+nu-protocol = "0.101.0"
 periodic-table-on-an-enum = "0.3.2"
