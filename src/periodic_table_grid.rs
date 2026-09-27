@@ -1,6 +1,5 @@
 use periodic_table_on_an_enum::Element;
 
-#[allow(dead_code)]
 pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 10] = [
     // Row 1
     [
