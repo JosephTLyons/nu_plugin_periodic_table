@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## September 26, 2026 - v0.2.13
+
+- Updated Nushell crates to fix broken state of plugin.
+- Fixed the first example in `help periodic-table`, which had its description and command swapped.
+
 ## August 25, 2025 - v0.2.12
 
 - Updated Nushell crates to fix broken state of plugin.
