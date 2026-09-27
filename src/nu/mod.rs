@@ -38,8 +38,8 @@ impl SimplePluginCommand for PeriodicTable {
     fn examples(&self) -> Vec<Example<'_>> {
         vec![
             Example {
-                description: "periodic-table",
-                example: "Display the periodic table in detailed form",
+                description: "Display the periodic table in detailed form",
+                example: "periodic-table",
                 result: None,
             },
             Example {
