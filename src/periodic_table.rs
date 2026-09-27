@@ -81,11 +81,11 @@ impl PeriodicTable {
             ),
             (
                 column_name("atomic mass", "a-mass"),
-                Value::float(element.get_atomic_mass() as f64, span),
+                Value::float(element.get_atomic_mass().into(), span),
             ),
             (
                 column_name("atomic radius", "a-rad"),
-                Value::int(element.get_atomic_radius() as i64, span),
+                Value::int(element.get_atomic_radius().into(), span),
             ),
             (
                 column_name("cpk color", "cpk-col"),
@@ -97,15 +97,15 @@ impl PeriodicTable {
             ),
             (
                 column_name("electronegativity", "electroneg"),
-                Value::float(element.get_electronegativity() as f64, span),
+                Value::float(element.get_electronegativity().into(), span),
             ),
             (
                 column_name("ionization energy", "ioniz-energ"),
-                Value::float(element.get_ionization_energy() as f64, span),
+                Value::float(element.get_ionization_energy().into(), span),
             ),
             (
                 column_name("electron affinity", "elec-affin"),
-                Value::float(element.get_electron_affinity() as f64, span),
+                Value::float(element.get_electron_affinity().into(), span),
             ),
             (
                 column_name("standard state", "stand-state"),
@@ -113,20 +113,20 @@ impl PeriodicTable {
             ),
             (
                 column_name("melting point", "m-point"),
-                Value::float(element.get_melting_point() as f64, span),
+                Value::float(element.get_melting_point().into(), span),
             ),
             (
                 column_name("boiling point", "b-point"),
-                Value::float(element.get_boiling_point() as f64, span),
+                Value::float(element.get_boiling_point().into(), span),
             ),
-            ("density", Value::float(element.get_density() as f64, span)),
+            ("density", Value::float(element.get_density().into(), span)),
             (
                 column_name("group block", "g-block"),
                 Value::string(element.get_group().name().to_string(), span),
             ),
             (
                 column_name("year discovered", "year"),
-                Value::int(element.get_year_discovered() as i64, span),
+                Value::int(element.get_year_discovered().into(), span),
             ),
         ]
     }
