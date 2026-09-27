@@ -57,18 +57,18 @@ impl SimplePluginCommand for PeriodicTable {
         call: &EvaluatedCall,
         _: &Value,
     ) -> Result<Value, LabeledError> {
-        let tag = call.head;
+        let span = call.head;
 
         let should_display_classic_table = call.has_flag("classic")?;
 
         if should_display_classic_table {
-            return Ok(PeriodicTable::build_classic_table(&tag));
+            return Ok(PeriodicTable::build_classic_table(span));
         }
 
         let should_show_full_column_names = call.has_flag("full")?;
 
         Ok(PeriodicTable::build_detailed_table(
-            &tag,
+            span,
             should_show_full_column_names,
         ))
     }
