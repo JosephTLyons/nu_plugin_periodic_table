@@ -64,119 +64,71 @@ impl PeriodicTable {
         tag: &nu_protocol::Span,
         should_show_full_column_names: bool,
     ) -> [(&'a str, Value); 16] {
+        let column_name = |full_name, short_name| {
+            if should_show_full_column_names {
+                full_name
+            } else {
+                short_name
+            }
+        };
+
         [
             ("name", Value::string(element.get_name().to_string(), *tag)),
             (
-                if should_show_full_column_names {
-                    "symbol"
-                } else {
-                    "sym"
-                },
+                column_name("symbol", "sym"),
                 Value::string(element.get_symbol().to_string(), *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "atomic number"
-                } else {
-                    "a-num"
-                },
+                column_name("atomic number", "a-num"),
                 Value::int(element.get_atomic_number() as i64, *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "atomic mass"
-                } else {
-                    "a-mass"
-                },
+                column_name("atomic mass", "a-mass"),
                 Value::float(element.get_atomic_mass() as f64, *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "atomic radius"
-                } else {
-                    "a-rad"
-                },
+                column_name("atomic radius", "a-rad"),
                 Value::int(element.get_atomic_radius() as i64, *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "cpk color"
-                } else {
-                    "cpk-col"
-                },
+                column_name("cpk color", "cpk-col"),
                 Value::binary(element.get_cpk().to_vec(), *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "electron configuration"
-                } else {
-                    "elec-config"
-                },
+                column_name("electron configuration", "elec-config"),
                 Value::string(element.get_electronic_configuration_str().to_string(), *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "electronegativity"
-                } else {
-                    "electroneg"
-                },
+                column_name("electronegativity", "electroneg"),
                 Value::float(element.get_electronegativity() as f64, *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "ionization energy"
-                } else {
-                    "ioniz-energ"
-                },
+                column_name("ionization energy", "ioniz-energ"),
                 Value::float(element.get_ionization_energy() as f64, *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "electron affinity"
-                } else {
-                    "elec-affin"
-                },
+                column_name("electron affinity", "elec-affin"),
                 Value::float(element.get_electron_affinity() as f64, *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "standard state"
-                } else {
-                    "stand-state"
-                },
+                column_name("standard state", "stand-state"),
                 Value::string(element.get_standard_state().name().to_string(), *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "melting point"
-                } else {
-                    "m-point"
-                },
+                column_name("melting point", "m-point"),
                 Value::float(element.get_melting_point() as f64, *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "boiling point"
-                } else {
-                    "b-point"
-                },
+                column_name("boiling point", "b-point"),
                 Value::float(element.get_boiling_point() as f64, *tag),
             ),
             ("density", Value::float(element.get_density() as f64, *tag)),
             (
-                if should_show_full_column_names {
-                    "group block"
-                } else {
-                    "g-block"
-                },
+                column_name("group block", "g-block"),
                 Value::string(element.get_group().name().to_string(), *tag),
             ),
             (
-                if should_show_full_column_names {
-                    "year discovered"
-                } else {
-                    "year"
-                },
+                column_name("year discovered", "year"),
                 Value::int(element.get_year_discovered() as i64, *tag),
             ),
         ]
