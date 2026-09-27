@@ -1,10 +1,9 @@
 use nu_ansi_term::Color;
 use nu_plugin::{EvaluatedCall, Plugin, PluginCommand, SimplePluginCommand};
 use nu_protocol::{Category, Example, LabeledError, Record, Signature, Span, Value};
-use periodic_table_on_an_enum::periodic_table;
 
 use crate::extensions::GroupBlockExt;
-use crate::periodic_table::{columns, Field};
+use crate::periodic_table::{self, columns};
 use crate::periodic_table_grid::PERIODIC_TABLE_GRID;
 
 pub struct PeriodicTable;
@@ -107,7 +106,7 @@ fn classic_table(span: Span) -> Value {
 }
 
 fn detailed_table(span: Span, should_show_full_column_names: bool) -> Value {
-    let rows: Vec<Value> = periodic_table()
+    let rows: Vec<Value> = periodic_table_on_an_enum::periodic_table()
         .map(|element| {
             let record: Record = columns(&element)
                 .into_iter()
@@ -117,7 +116,7 @@ fn detailed_table(span: Span, should_show_full_column_names: bool) -> Value {
                     } else {
                         column.short_name
                     };
-                    (name.to_owned(), to_value(column.field, span))
+                    (name.to_owned(), to_value(column.value, span))
                 })
                 .collect();
 
@@ -128,11 +127,11 @@ fn detailed_table(span: Span, should_show_full_column_names: bool) -> Value {
     Value::list(rows, span)
 }
 
-fn to_value(field: Field, span: Span) -> Value {
-    match field {
-        Field::String(string) => Value::string(string, span),
-        Field::Int(int) => Value::int(int, span),
-        Field::Float(float) => Value::float(float, span),
-        Field::Bytes(bytes) => Value::binary(bytes.to_vec(), span),
+fn to_value(value: periodic_table::Value, span: Span) -> Value {
+    match value {
+        periodic_table::Value::String(string) => Value::string(string, span),
+        periodic_table::Value::Int(int) => Value::int(int, span),
+        periodic_table::Value::Float(float) => Value::float(float, span),
+        periodic_table::Value::Rgb(rgb) => Value::binary(rgb.to_vec(), span),
     }
 }

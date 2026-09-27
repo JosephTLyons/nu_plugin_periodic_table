@@ -1,96 +1,98 @@
 use crate::extensions::{GroupBlockExt, StateOfMatterExt};
 use periodic_table_on_an_enum::Element;
 
-/// A single piece of element data, independent of how it is displayed.
-pub enum Field {
+pub enum Value {
     String(&'static str),
     Int(i64),
     Float(f64),
-    Bytes([u8; 3]),
+    Rgb([u8; 3]),
 }
 
 pub struct Column {
     pub full_name: &'static str,
     pub short_name: &'static str,
-    pub field: Field,
+    pub value: Value,
 }
 
-/// The detailed-table columns for `element`, in display order.
-pub fn columns(element: &Element) -> [Column; 16] {
-    let column = |full_name, short_name, field| Column {
-        full_name,
-        short_name,
-        field,
-    };
+impl Column {
+    fn new(full_name: &'static str, short_name: &'static str, value: Value) -> Self {
+        Self {
+            full_name,
+            short_name,
+            value,
+        }
+    }
+}
 
+pub fn columns(element: &Element) -> [Column; 16] {
     [
-        column("name", "name", Field::String(element.get_name())),
-        column("symbol", "sym", Field::String(element.get_symbol())),
-        column(
+        Column::new("name", "name", Value::String(element.get_name())),
+        Column::new("symbol", "sym", Value::String(element.get_symbol())),
+        Column::new(
             "atomic number",
             "a-num",
-            Field::Int(element.get_atomic_number() as i64),
+            Value::Int(element.get_atomic_number() as i64),
         ),
-        column(
+        Column::new(
             "atomic mass",
             "a-mass",
-            Field::Float(element.get_atomic_mass().into()),
+            Value::Float(element.get_atomic_mass().into()),
         ),
-        column(
+        Column::new(
             "atomic radius",
             "a-rad",
-            Field::Int(element.get_atomic_radius().into()),
+            Value::Int(element.get_atomic_radius().into()),
         ),
-        column("cpk color", "cpk-col", Field::Bytes(element.get_cpk())),
-        column(
+        Column::new("cpk color", "cpk-col", Value::Rgb(element.get_cpk())),
+        Column::new(
             "electron configuration",
             "elec-config",
-            Field::String(element.get_electronic_configuration_str()),
+            Value::String(element.get_electronic_configuration_str()),
         ),
-        column(
+        Column::new(
             "electronegativity",
             "electroneg",
-            Field::Float(element.get_electronegativity().into()),
+            Value::Float(element.get_electronegativity().into()),
         ),
-        column(
+        Column::new(
             "ionization energy",
             "ioniz-energ",
-            Field::Float(element.get_ionization_energy().into()),
+            Value::Float(element.get_ionization_energy().into()),
         ),
-        column(
+        Column::new(
             "electron affinity",
             "elec-affin",
-            Field::Float(element.get_electron_affinity().into()),
+            Value::Float(element.get_electron_affinity().into()),
         ),
-        column(
+        Column::new(
             "standard state",
             "stand-state",
-            Field::String(element.get_standard_state().name()),
+            Value::String(element.get_standard_state().name()),
         ),
-        column(
+        Column::new(
             "melting point",
             "m-point",
-            Field::Float(element.get_melting_point().into()),
+            Value::Float(element.get_melting_point().into()),
         ),
-        column(
+        Column::new(
             "boiling point",
             "b-point",
-            Field::Float(element.get_boiling_point().into()),
+            Value::Float(element.get_boiling_point().into()),
         ),
-        column(
+        Column::new(
             "density",
             "density",
-            Field::Float(element.get_density().into()),
+            Value::Float(element.get_density().into()),
         ),
-        column(
+        Column::new(
             "group block",
             "g-block",
-            Field::String(element.get_group().name()),
+            Value::String(element.get_group().name()),
         ),
-        column(
+        Column::new(
             "year discovered",
             "year",
-            Field::Int(element.get_year_discovered().into()),
+            Value::Int(element.get_year_discovered().into()),
         ),
     ]
 }
