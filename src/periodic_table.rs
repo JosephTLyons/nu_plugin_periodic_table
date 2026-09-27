@@ -46,7 +46,6 @@ impl PeriodicTable {
         should_show_full_column_names: bool,
     ) -> Result<Value, LabeledError> {
         let vec: Vec<Value> = periodic_table()
-            .into_iter()
             .map(|element| {
                 let row = PeriodicTable::row(&element, tag, should_show_full_column_names);
                 let record = row

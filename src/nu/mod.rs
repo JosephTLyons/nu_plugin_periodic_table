@@ -35,16 +35,16 @@ impl SimplePluginCommand for PeriodicTable {
             .category(Category::Generators)
     }
 
-    fn examples(&self) -> Vec<Example> {
+    fn examples(&self) -> Vec<Example<'_>> {
         vec![
             Example {
-                description: "periodic-table".into(),
-                example: "Display the periodic table in detailed form".into(),
+                description: "periodic-table",
+                example: "Display the periodic table in detailed form",
                 result: None,
             },
             Example {
-                description: "Display the periodic table in classic form".into(),
-                example: "periodic-table -c".into(),
+                description: "Display the periodic table in classic form",
+                example: "periodic-table -c",
                 result: None,
             },
         ]
