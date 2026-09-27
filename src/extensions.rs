@@ -1,12 +1,12 @@
 use periodic_table_on_an_enum::{GroupBlock, StateOfMatter};
 
 pub trait GroupBlockExt {
-    fn name(&self) -> &str;
+    fn name(&self) -> &'static str;
     fn color(&self) -> [u8; 3];
 }
 
 impl GroupBlockExt for GroupBlock {
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         match self {
             GroupBlock::AlkaliMetal => "Alkali Metal",
             GroupBlock::AlkalineEarthMetal => "Alkaline Earth Metal",
@@ -38,11 +38,11 @@ impl GroupBlockExt for GroupBlock {
 }
 
 pub trait StateOfMatterExt {
-    fn name(&self) -> &str;
+    fn name(&self) -> &'static str;
 }
 
 impl StateOfMatterExt for StateOfMatter {
-    fn name(&self) -> &str {
+    fn name(&self) -> &'static str {
         match self {
             StateOfMatter::Solid => "Solid",
             StateOfMatter::Liquid => "Liquid",
