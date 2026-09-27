@@ -1,7 +1,7 @@
 use crate::extensions::{GroupBlockExt, StateOfMatterExt};
 use crate::periodic_table_grid::PERIODIC_TABLE_GRID;
 use nu_ansi_term::Color;
-use nu_protocol::{LabeledError, Record, Value};
+use nu_protocol::{Record, Value};
 use periodic_table_on_an_enum::{periodic_table, Element};
 
 // TODO: Rework this to not have any nushell dependencies. Return raw data and nushell mod should convert it into nushell values.
@@ -9,7 +9,7 @@ use periodic_table_on_an_enum::{periodic_table, Element};
 pub struct PeriodicTable;
 
 impl PeriodicTable {
-    pub fn build_classic_table(tag: &nu_protocol::Span) -> Result<Value, LabeledError> {
+    pub fn build_classic_table(tag: &nu_protocol::Span) -> Value {
         let vec: Vec<Value> = PERIODIC_TABLE_GRID
             .into_iter()
             .map(|element_row| {
@@ -38,13 +38,13 @@ impl PeriodicTable {
             })
             .collect();
 
-        Ok(Value::list(vec, *tag))
+        Value::list(vec, *tag)
     }
 
     pub fn build_detailed_table(
         tag: &nu_protocol::Span,
         should_show_full_column_names: bool,
-    ) -> Result<Value, LabeledError> {
+    ) -> Value {
         let vec: Vec<Value> = periodic_table()
             .map(|element| {
                 let row = PeriodicTable::row(&element, tag, should_show_full_column_names);
@@ -56,7 +56,7 @@ impl PeriodicTable {
             })
             .collect();
 
-        Ok(Value::list(vec, *tag))
+        Value::list(vec, *tag)
     }
 
     fn row(

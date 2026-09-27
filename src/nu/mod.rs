@@ -62,11 +62,14 @@ impl SimplePluginCommand for PeriodicTable {
         let should_display_classic_table = call.has_flag("classic")?;
 
         if should_display_classic_table {
-            return PeriodicTable::build_classic_table(&tag);
+            return Ok(PeriodicTable::build_classic_table(&tag));
         }
 
         let should_show_full_column_names = call.has_flag("full")?;
 
-        PeriodicTable::build_detailed_table(&tag, should_show_full_column_names)
+        Ok(PeriodicTable::build_detailed_table(
+            &tag,
+            should_show_full_column_names,
+        ))
     }
 }
