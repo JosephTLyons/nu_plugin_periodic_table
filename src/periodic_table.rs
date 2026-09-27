@@ -1,133 +1,96 @@
 use crate::extensions::{GroupBlockExt, StateOfMatterExt};
-use crate::periodic_table_grid::PERIODIC_TABLE_GRID;
-use nu_ansi_term::Color;
-use nu_protocol::{Record, Span, Value};
-use periodic_table_on_an_enum::{periodic_table, Element};
+use periodic_table_on_an_enum::Element;
 
-// TODO: Rework this to not have any nushell dependencies. Return raw data and nushell mod should convert it into nushell values.
+/// A single piece of element data, independent of how it is displayed.
+pub enum Field {
+    String(&'static str),
+    Int(i64),
+    Float(f64),
+    Bytes([u8; 3]),
+}
 
-pub struct PeriodicTable;
+pub struct Column {
+    pub full_name: &'static str,
+    pub short_name: &'static str,
+    pub field: Field,
+}
 
-impl PeriodicTable {
-    pub fn build_classic_table(span: Span) -> Value {
-        let vec: Vec<Value> = PERIODIC_TABLE_GRID
-            .into_iter()
-            .map(|element_row| {
-                let record: Record = element_row
-                    .iter()
-                    .enumerate()
-                    .map(|(i, element_option)| {
-                        let value = match element_option {
-                            Some(element) => Value::string(
-                                {
-                                    let symbol = element.get_symbol();
-                                    let [r, g, b] = element.get_group().color();
-                                    Color::Rgb(r, g, b).paint(symbol).to_string()
-                                },
-                                span,
-                            ),
-                            None => Value::nothing(span),
-                        };
+/// The detailed-table columns for `element`, in display order.
+pub fn columns(element: &Element) -> [Column; 16] {
+    let column = |full_name, short_name, field| Column {
+        full_name,
+        short_name,
+        field,
+    };
 
-                        let group_number = i + 1;
-                        (group_number.to_string(), value)
-                    })
-                    .collect();
-
-                Value::record(record, span)
-            })
-            .collect();
-
-        Value::list(vec, span)
-    }
-
-    pub fn build_detailed_table(span: Span, should_show_full_column_names: bool) -> Value {
-        let vec: Vec<Value> = periodic_table()
-            .map(|element| {
-                let row = PeriodicTable::row(&element, span, should_show_full_column_names);
-                let record = row
-                    .into_iter()
-                    .map(|(name, value)| (name.to_owned(), value))
-                    .collect::<Record>();
-                Value::record(record, span)
-            })
-            .collect();
-
-        Value::list(vec, span)
-    }
-
-    fn row(
-        element: &Element,
-        span: Span,
-        should_show_full_column_names: bool,
-    ) -> [(&'static str, Value); 16] {
-        let column_name = |full_name, short_name| {
-            if should_show_full_column_names {
-                full_name
-            } else {
-                short_name
-            }
-        };
-
-        [
-            ("name", Value::string(element.get_name().to_string(), span)),
-            (
-                column_name("symbol", "sym"),
-                Value::string(element.get_symbol().to_string(), span),
-            ),
-            (
-                column_name("atomic number", "a-num"),
-                Value::int(element.get_atomic_number() as i64, span),
-            ),
-            (
-                column_name("atomic mass", "a-mass"),
-                Value::float(element.get_atomic_mass().into(), span),
-            ),
-            (
-                column_name("atomic radius", "a-rad"),
-                Value::int(element.get_atomic_radius().into(), span),
-            ),
-            (
-                column_name("cpk color", "cpk-col"),
-                Value::binary(element.get_cpk().to_vec(), span),
-            ),
-            (
-                column_name("electron configuration", "elec-config"),
-                Value::string(element.get_electronic_configuration_str().to_string(), span),
-            ),
-            (
-                column_name("electronegativity", "electroneg"),
-                Value::float(element.get_electronegativity().into(), span),
-            ),
-            (
-                column_name("ionization energy", "ioniz-energ"),
-                Value::float(element.get_ionization_energy().into(), span),
-            ),
-            (
-                column_name("electron affinity", "elec-affin"),
-                Value::float(element.get_electron_affinity().into(), span),
-            ),
-            (
-                column_name("standard state", "stand-state"),
-                Value::string(element.get_standard_state().name().to_string(), span),
-            ),
-            (
-                column_name("melting point", "m-point"),
-                Value::float(element.get_melting_point().into(), span),
-            ),
-            (
-                column_name("boiling point", "b-point"),
-                Value::float(element.get_boiling_point().into(), span),
-            ),
-            ("density", Value::float(element.get_density().into(), span)),
-            (
-                column_name("group block", "g-block"),
-                Value::string(element.get_group().name().to_string(), span),
-            ),
-            (
-                column_name("year discovered", "year"),
-                Value::int(element.get_year_discovered().into(), span),
-            ),
-        ]
-    }
+    [
+        column("name", "name", Field::String(element.get_name())),
+        column("symbol", "sym", Field::String(element.get_symbol())),
+        column(
+            "atomic number",
+            "a-num",
+            Field::Int(element.get_atomic_number() as i64),
+        ),
+        column(
+            "atomic mass",
+            "a-mass",
+            Field::Float(element.get_atomic_mass().into()),
+        ),
+        column(
+            "atomic radius",
+            "a-rad",
+            Field::Int(element.get_atomic_radius().into()),
+        ),
+        column("cpk color", "cpk-col", Field::Bytes(element.get_cpk())),
+        column(
+            "electron configuration",
+            "elec-config",
+            Field::String(element.get_electronic_configuration_str()),
+        ),
+        column(
+            "electronegativity",
+            "electroneg",
+            Field::Float(element.get_electronegativity().into()),
+        ),
+        column(
+            "ionization energy",
+            "ioniz-energ",
+            Field::Float(element.get_ionization_energy().into()),
+        ),
+        column(
+            "electron affinity",
+            "elec-affin",
+            Field::Float(element.get_electron_affinity().into()),
+        ),
+        column(
+            "standard state",
+            "stand-state",
+            Field::String(element.get_standard_state().name()),
+        ),
+        column(
+            "melting point",
+            "m-point",
+            Field::Float(element.get_melting_point().into()),
+        ),
+        column(
+            "boiling point",
+            "b-point",
+            Field::Float(element.get_boiling_point().into()),
+        ),
+        column(
+            "density",
+            "density",
+            Field::Float(element.get_density().into()),
+        ),
+        column(
+            "group block",
+            "g-block",
+            Field::String(element.get_group().name()),
+        ),
+        column(
+            "year discovered",
+            "year",
+            Field::Int(element.get_year_discovered().into()),
+        ),
+    ]
 }
