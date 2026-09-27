@@ -59,11 +59,11 @@ impl PeriodicTable {
         Ok(Value::list(vec, *tag))
     }
 
-    fn row<'a>(
+    fn row(
         element: &Element,
         tag: &nu_protocol::Span,
         should_show_full_column_names: bool,
-    ) -> [(&'a str, Value); 16] {
+    ) -> [(&'static str, Value); 16] {
         let column_name = |full_name, short_name| {
             if should_show_full_column_names {
                 full_name
