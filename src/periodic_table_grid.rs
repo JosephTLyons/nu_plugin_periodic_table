@@ -196,3 +196,32 @@ pub const PERIODIC_TABLE_GRID: [[Option<Element>; 18]; 10] = [
         None,
     ],
 ];
+
+#[cfg(test)]
+mod tests {
+    use super::PERIODIC_TABLE_GRID;
+    use periodic_table_on_an_enum::periodic_table;
+    use std::collections::HashSet;
+
+    #[test]
+    fn grid_contains_every_element_exactly_once() {
+        let placed: Vec<_> = PERIODIC_TABLE_GRID
+            .iter()
+            .flatten()
+            .flatten()
+            .copied()
+            .collect();
+        let unique: HashSet<_> = placed.iter().copied().collect();
+
+        assert_eq!(
+            placed.len(),
+            unique.len(),
+            "an element appears more than once"
+        );
+        assert_eq!(
+            unique,
+            periodic_table().collect(),
+            "the grid is missing an element"
+        );
+    }
+}

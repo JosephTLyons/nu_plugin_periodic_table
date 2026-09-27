@@ -96,3 +96,39 @@ pub fn columns(element: &Element) -> [Column; 16] {
         ),
     ]
 }
+
+#[cfg(test)]
+mod tests {
+    use super::columns;
+    use periodic_table_on_an_enum::Element;
+    use std::collections::HashSet;
+
+    #[test]
+    fn column_names_are_unique() {
+        let columns = columns(&Element::Hydrogen);
+        let full_names: HashSet<_> = columns.iter().map(|column| column.full_name).collect();
+        let short_names: HashSet<_> = columns.iter().map(|column| column.short_name).collect();
+
+        assert_eq!(
+            full_names.len(),
+            columns.len(),
+            "duplicate full column name"
+        );
+        assert_eq!(
+            short_names.len(),
+            columns.len(),
+            "duplicate short column name"
+        );
+    }
+
+    #[test]
+    fn short_names_have_no_spaces() {
+        for column in columns(&Element::Hydrogen) {
+            assert!(
+                !column.short_name.contains(' '),
+                "short column name {:?} contains a space",
+                column.short_name
+            );
+        }
+    }
+}
